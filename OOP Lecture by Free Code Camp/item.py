@@ -5,7 +5,7 @@ class Item:
     pay_rate = 0.8  # The pay rate after 20% discount
     all = []
 
-    # Converting the following method into a class method.
+    # Converting the following method into a class method using @classmethod decorator.
     @classmethod
     def instantiate_from_csv(cls):
         with open("items.csv", "r") as f:
@@ -18,6 +18,17 @@ class Item:
                 price=float(i.get("Price")),
                 quantity=int(i.get("Quantity"))
             )
+
+    @staticmethod  # Static methods don't take class or instance as parameter and work same for all instances.
+    def is_integer(num):
+        if type(num) == int:
+            return True
+        else:
+            return False
+
+    @property  # This makes a read only attribute to an instance which is called property.
+    def read_only_name(self):
+        return "AAA"
 
     def __init__(self, name: str, price: float, quantity=0):
         # Run validations to the received arguments
@@ -41,17 +52,3 @@ class Item:
     # Making line-11 print better with 'represent' magic method.
     def __repr__(self):
         return f"Item - {self.name}, {self.price}, {self.quantity}"
-
-
-'''
-Gonna use the CSV file to do the following tasks :-
-item1 = Item("Phone", 100, 1)
-item2 = Item("Laptop", 1000, 3)
-item3 = Item("Cable", 10, 5)
-item4 = Item("Mouse", 50, 5)
-item5 = Item("Keyboard", 75, 5)
-'''
-
-Item.instantiate_from_csv()
-
-print(Item.all)
